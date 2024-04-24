@@ -17,3 +17,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
 add_subdirectory(src)
 
 # tests
+
+enable_testing()
+add_subdirectory(dep)
+add_subdirectory(tests)
