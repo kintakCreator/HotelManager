@@ -16,5 +16,5 @@ public:
 private:
     std::vector<Room> m_roomStorage;
     std::unordered_map<uint32_t, size_t> m_roomIndexByUID;
-    std::unordered_map<uint16_t, uint32_t> m_UIDByRoomNumber;
+    std::unordered_map<uint8_t, uint32_t> m_UIDByRoomNumber;
 };

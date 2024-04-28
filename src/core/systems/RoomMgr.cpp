@@ -15,19 +15,21 @@ bool RoomManager::removeRoom(uint32_t uid) {
     if (!existsRoom(uid))
         return false;
     size_t roomIndex = m_roomIndexByUID[uid];
-    uint8_t roomNumber = m_roomStorage[uid].roomNumber;
+    uint8_t roomNumber = m_roomStorage[roomIndex].roomNumber;
     m_UIDByRoomNumber.erase(roomNumber);
     m_roomIndexByUID.erase(uid);
     return true;
 }
 
 bool RoomManager::editRoom(uint32_t uid, Room& newRoomData) {
-    if (!existsRoom(uid) || getUID(newRoomData.roomNumber) == -1)
+    if (!existsRoom(uid) || getUID(newRoomData.roomNumber) != -1)
         return false;
     size_t storageIndex = m_roomIndexByUID[uid];
     newRoomData.uid = m_roomStorage[storageIndex].uid;
+    uint16_t oldRoomNumber = m_roomStorage[storageIndex].roomNumber;
+    m_UIDByRoomNumber.erase(oldRoomNumber);
     m_roomStorage[storageIndex] = newRoomData;
-    m_UIDByRoomNumber[newRoomData.uid] = newRoomData.roomNumber;
+    m_UIDByRoomNumber[newRoomData.roomNumber] = newRoomData.uid;
     return true;
 }
 
