@@ -4,11 +4,11 @@
 
 class HotelManager {
 public:
-    void addHotel(const Hotel& hotel);
-    void removeHotel(uint32_t uid);
-    void editHotel(uint32_t uid, const Hotel& newHotelData);
-    bool hotelExist(uint32_t uid) const;
+    bool addHotel(Hotel& hotel);
+    bool removeHotel(int uid);
+    bool editHotel(int uid, Hotel& newHotelData);
+    bool hotelExist(int uid) const;
 private:
     std::vector<Hotel> m_hotelStorage;
-    std::unordered_map<uint32_t, size_t> m_hotelAccess;
+    std::unordered_map<int, size_t> m_hotelAccess;
 };

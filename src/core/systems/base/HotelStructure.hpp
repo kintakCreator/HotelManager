@@ -3,7 +3,7 @@
 
 struct Hotel
 {
-    uint32_t uid;
-    uint16_t peopleCapacity;
+    int uid;
+    int peopleCapacity;
     std::string hotelName;
 };

@@ -5,7 +5,7 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 include_directories(${CMAKE_BINARY_DIR}/src)
 
 add_executable(HotelTest 
-    systems/RoomManagerTests.cpp
+    tester.cpp    
 )
 
 target_link_libraries(HotelTest core gtest gtest_main)

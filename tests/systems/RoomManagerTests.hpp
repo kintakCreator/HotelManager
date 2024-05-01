@@ -1,4 +1,3 @@
-#include "gtest/gtest.h"
 #include "core/systems/RoomMgr.hpp"
 #include <memory>
 
@@ -93,8 +92,3 @@ TEST(RoomManager, editRoom) {
     ASSERT_TRUE(roomMgrPtr->existsRoom(roomMgrPtr->getUID(109)));
 }
 
-int main(int argc, char** argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-
-    return RUN_ALL_TESTS();
-}

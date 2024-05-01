@@ -1,4 +1,4 @@
-#include "core/systems/RoomMgr.hpp"
+#include "core/handlers/AddRoomHandler.hpp"
 
 #include <iostream>
 #include <memory>
@@ -21,20 +21,15 @@ public:
 int main() 
 {
     auto ApplicationPtr = std::make_unique<Application>();
-    // Some test class here
-    ApplicationPtr->ShowMenu();
-
-    auto RoomMgrPtr = std::make_unique<RoomManager>();
-    std::cout << RoomMgrPtr->existsRoom(1) << '\n';
-    
-    Room myRoom{1, 1, 2, 1, ""};
-    RoomMgrPtr->addRoom(myRoom);
-
-    std::cout << RoomMgrPtr->existsRoom(1) << '\n';
-
-    RoomMgrPtr->removeRoom(1);
-
-    std::cout << RoomMgrPtr->existsRoom(1) << '\n';
-
-    RoomMgrPtr->removeRoom(1);
+    RoomManager* RoomMgrPtr = new RoomManager();
+    while (true) {
+        ApplicationPtr->ShowMenu();
+        int variant;
+        std::cin >> variant;
+        if (variant == 1) {
+            auto AddRoomHandlerPtr = std::make_unique<AddRoomHandler>(); 
+            AddRoomHandlerPtr->printMessage();
+            AddRoomHandlerPtr->handleAction(RoomMgrPtr);
+        }
+    }
 }

@@ -2,10 +2,10 @@
 #include <stdint.h>
 
 struct Room {
-    uint32_t hotelUid;
-    uint32_t uid = -1;
-    uint8_t roomNumber;
-    uint8_t peopleCapacity;
+    int hotelUid;
+    int uid = -1; // unsigned int was here (it's so stupid...)
+    int roomNumber;
+    int peopleCapacity;
     // rentStartDate
     // rentEndDate
     std::string renterName;
