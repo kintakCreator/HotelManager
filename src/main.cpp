@@ -1,4 +1,5 @@
 #include "core/handlers/AddRoomHandler.hpp"
+#include "spdlog/spdlog.h"
 
 #include <iostream>
 #include <memory>
@@ -19,7 +20,8 @@ public:
 };
 
 int main() 
-{
+{    
+    spdlog::info("Starting...");
     auto ApplicationPtr = std::make_unique<Application>();
     RoomManager* RoomMgrPtr = new RoomManager();
     while (true) {
@@ -29,7 +31,15 @@ int main()
         if (variant == 1) {
             auto AddRoomHandlerPtr = std::make_unique<AddRoomHandler>(); 
             AddRoomHandlerPtr->printMessage();
-            AddRoomHandlerPtr->handleAction(RoomMgrPtr);
+            try {
+                AddRoomHandlerPtr->handleAction(RoomMgrPtr);
+            } catch (BaseException& ex) {
+                spdlog::error(ex.what());
+                return 1;
+            } catch (...) {
+                spdlog::error("Unknown exception has been thrown\n");
+                return 1;
+            }
         }
     }
 }
