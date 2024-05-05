@@ -1,3 +1,5 @@
+#pragma once
+
 class IHandler {
 public:
     virtual void printMessage() = 0;

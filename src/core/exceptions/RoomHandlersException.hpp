@@ -1,3 +1,5 @@
+#pragma once
+
 #include "base/BaseException.hpp"
 
 struct RoomHandlersException: BaseException { 

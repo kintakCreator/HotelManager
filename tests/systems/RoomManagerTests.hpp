@@ -92,3 +92,7 @@ TEST(RoomManager, editRoom) {
     ASSERT_TRUE(roomMgrPtr->existsRoom(roomMgrPtr->getUID(109)));
 }
 
+TEST(RoomManager, isOccupied) {
+    auto roomMgrPtr = std::make_unique<RoomManager>();
+    // TODO: implement it when I create occupyRoom method
+}

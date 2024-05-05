@@ -1,4 +1,5 @@
 #include "RoomMgr.hpp"
+#include <stdexcept>
 
 bool RoomManager::addRoom(Room& room) {
     if (getUID(room.roomNumber) != -1)
@@ -10,11 +11,11 @@ bool RoomManager::addRoom(Room& room) {
     return true;
 }
 
-// TODO: bad implementation, protobuf fix it
+// TODO: bad implementation, db fix it
 bool RoomManager::removeRoom(int uid) {
-    if (!existsRoom(uid))
+    int roomIndex = getRoomIndexByUID(uid);
+    if (roomIndex == -1)
         return false;
-    size_t roomIndex = m_roomIndexByUID[uid];
     int roomNumber = m_roomStorage[roomIndex].roomNumber;
     m_UIDByRoomNumber.erase(roomNumber);
     m_roomIndexByUID.erase(uid);
@@ -22,13 +23,15 @@ bool RoomManager::removeRoom(int uid) {
 }
 
 bool RoomManager::editRoom(int uid, Room& newRoomData) {
-    if (!existsRoom(uid) || getUID(newRoomData.roomNumber) != -1)
+    if (getUID(newRoomData.roomNumber) != -1)
         return false;
-    size_t storageIndex = m_roomIndexByUID[uid];
-    newRoomData.uid = m_roomStorage[storageIndex].uid;
-    int oldRoomNumber = m_roomStorage[storageIndex].roomNumber;
+    int roomIndex = getRoomIndexByUID(uid);
+    if (roomIndex == -1)
+        return false;
+    newRoomData.uid = m_roomStorage[roomIndex].uid;
+    int oldRoomNumber = m_roomStorage[roomIndex].roomNumber;
     m_UIDByRoomNumber.erase(oldRoomNumber);
-    m_roomStorage[storageIndex] = newRoomData;
+    m_roomStorage[roomIndex] = newRoomData;
     m_UIDByRoomNumber[newRoomData.roomNumber] = newRoomData.uid;
     return true;
 }
@@ -37,9 +40,23 @@ bool RoomManager::existsRoom(int uid) const {
     return m_roomIndexByUID.find(uid) != m_roomIndexByUID.end();
 }
 
+bool RoomManager::isOccupied(int uid) const {
+    int roomIndex = getRoomIndexByUID(uid);
+    if (roomIndex == -1)
+        throw std::exception(); // TODO: custom exception
+    return !m_roomStorage[roomIndex].renterName.empty();
+}
+
 int RoomManager::getUID(int roomNumber) const {
     auto it = m_UIDByRoomNumber.find(roomNumber);
     if (it == m_UIDByRoomNumber.end())
+        return -1;
+    return (*it).second;
+}
+
+int RoomManager::getRoomIndexByUID(int uid) const {
+    auto it = m_roomIndexByUID.find(uid);
+    if (it == m_roomIndexByUID.end())
         return -1;
     return (*it).second;
 }

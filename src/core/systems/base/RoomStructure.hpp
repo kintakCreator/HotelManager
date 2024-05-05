@@ -8,5 +8,6 @@ struct Room {
     int peopleCapacity;
     // rentStartDate
     // rentEndDate
+    // std::vector<Users>
     std::string renterName;
 };

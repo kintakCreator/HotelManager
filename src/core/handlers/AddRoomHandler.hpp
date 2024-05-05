@@ -1,3 +1,5 @@
+#pragma once
+
 #include "base/IRoomHandler.hpp"
 #include "spdlog/spdlog.h"
 #include "exceptions/RoomHandlersException.hpp"
